@@ -11,7 +11,7 @@ class s3cmd::install inherits s3cmd::params {
   $temp_file_name = 's3cmd.tar.gz'
   $temp_file = "${s3cmd::params::temp_dir}/${temp_file_name}"
 
-  wget::fetch { $url:
+  wget::retrieve { $url:
     destination => $temp_file,
   }
 
@@ -19,7 +19,7 @@ class s3cmd::install inherits s3cmd::params {
     command     => "tar -zxf ${temp_file}",
     cwd         => $s3cmd::params::temp_dir,
     creates     => "${s3cmd::params::install_dir}/s3cmd",
-    subscribe   => Wget::Fetch[$url],
+    subscribe   => Wget::Retrieve[$url],
     refreshonly => true,
   }
 
